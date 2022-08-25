@@ -15,7 +15,7 @@ provider "aws" {
 }
 
 module "ec2" {
-  source         = "./ec2"
+  source         = "./resources/ec2"
   ami            = "ami-830c94e3"
   instance_type  = "t2.micro"
   security_group = module.security-group.app_server_security_group
@@ -23,6 +23,5 @@ module "ec2" {
 }
 
 module "security-group" {
-  source = "./security-group"
+  source = "./resources/security-group"
 }
-

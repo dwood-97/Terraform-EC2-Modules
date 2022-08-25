@@ -1,1 +1,1 @@
-{"Modules":[{"Key":"ec2","Source":"./ec2","Dir":"ec2"},{"Key":"security-group","Source":"./security-group","Dir":"security-group"},{"Key":"","Source":"","Dir":"."}]}
+{"Modules":[{"Key":"security-group","Source":"./resources/security-group","Dir":"resources/security-group"},{"Key":"","Source":"","Dir":"."},{"Key":"ec2","Source":"./resources/ec2","Dir":"resources/ec2"}]}
