@@ -1,32 +1,26 @@
 # -- security/main.tf -- #
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 3.27"
+resource "aws_security_group" "app_server" {
+  name   = var.name
+  vpc_id = var.vpc_id
+
+  dynamic "ingress" {
+    for_each = var.ingress_rules
+    content {
+      description = lookup(ingress.value, "description", null)
+      from_port   = lookup(ingress.value, "from_port", null)
+      to_port     = lookup(ingress.value, "to_port", null)
+      protocol    = lookup(ingress.value, "protocol", null)
+      cidr_blocks = lookup(ingress.value, "cidr_blocks", null)
     }
   }
-
-  required_version = ">= 0.14.9"
-}
-
-provider "aws" {
-  region = var.region
-}
-resource "aws_security_group" "app_server" {
-  name        = var.name
-  description = var.description
-  vpc_id      = var.vpc_id
-  ingress {
-    from_port   = var.from_port_in
-    to_port     = var.to_port_in
-    protocol    = var.protocol_in
-    cidr_blocks = [var.cidr_blocks_in]
-  }
-  egress {
-    from_port   = var.from_port_eg
-    to_port     = var.to_port_eg
-    protocol    = var.protocol_eg
-    cidr_blocks = [var.cidr_blocks_eg]
+  dynamic "egress" {
+    for_each = var.egress_rules
+    content {
+      description = lookup(egress.value, "description", null)
+      from_port   = lookup(egress.value, "from_port", null)
+      to_port     = lookup(egress.value, "to_port", null)
+      protocol    = lookup(egress.value, "protocol", null)
+      cidr_blocks = lookup(egress.value, "cidr_blocks", null)
+    }
   }
 }

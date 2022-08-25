@@ -1,14 +1,36 @@
 # -- security-group/variables -- #
 
-variable "vpc_id" {}
-variable "description" {}
-variable "name" {}
-variable "from_port_in" {}
-variable "to_port_in" {}
-variable "protocol_in" {}
-variable "cidr_blocks_in" {}
-variable "from_port_eg" {}
-variable "to_port_eg" {}
-variable "protocol_eg" {}
-variable "cidr_blocks_eg" {}
-variable "region" {}
+variable "vpc_id" {
+  type    = string
+  default = "vpc-07f0265dfc46a3de5"
+}
+variable "name" {
+  type    = string
+  default = "allow_all_in_http"
+}
+variable "ingress_rules" {
+  default = {
+    "my ingress rule" = {
+      "description" = "For HTTP"
+      "from_port"   = "80"
+      "to_port"     = "80"
+      "protocol"    = "tcp"
+      "cidr_blocks" = ["0.0.0.0/0"]
+    }
+  }
+  type        = map(any)
+  description = "Security group rules"
+}
+variable "egress_rules" {
+  default = {
+    "my egress rule" = {
+      "description" = "For HTTP"
+      "from_port"   = "80"
+      "to_port"     = "80"
+      "protocol"    = "tcp"
+      "cidr_blocks" = ["0.0.0.0/0"]
+    }
+  }
+  type        = map(any)
+  description = "Security group rules"
+}
